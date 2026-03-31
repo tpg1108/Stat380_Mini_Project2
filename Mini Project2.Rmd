@@ -1,0 +1,31 @@
+---
+title: "Mini Project"
+author: "Sean Lydon, Tyler Gilber, Ethan Martin, Tim Damasco"
+date: "2026-03-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library()
+```
+
+
+## Task 1
+
+
+## Task 2
+
+
+## Task 3
+
+
+## Task 4
+
+
+## Task 5
