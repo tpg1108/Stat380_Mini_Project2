@@ -10,9 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-library(tidyverse)
+library(readxl)
+codGames <- read_xlsx('CODGames2_mp.xlsx')
+library(dplyr)
 library(ggplot2)
-library()
+library(tidyverse)
 ```
 
 
