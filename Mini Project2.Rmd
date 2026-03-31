@@ -1,6 +1,6 @@
 ---
 title: "Mini Project"
-author: "Sean Lydon, Tyler Gilber, Ethan Martin, Tim Damasco"
+author: "Sean Lydon, Tyler Gilbert, Ethan Martin, Tim Damasco"
 date: "2026-03-31"
 output: html_document
 ---
