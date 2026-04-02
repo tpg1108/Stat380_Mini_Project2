@@ -92,7 +92,31 @@ The Map variable is categorical and represents the location where each game take
 
 
 
-## Task 3
+## Task 3 (Done by Tyler Gilbert)
+```{r}
+ggplot(codGames, aes(x = Deaths, y = Eliminations)) +
+  geom_point(alpha = 0.6, color = "steelblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Eliminations vs Deaths",
+       x = "Deaths",
+       y = "Eliminations")
+
+# Correlation (relationship statistic)
+cor(codGames$Deaths, codGames$Eliminations, use = "complete.obs")
+```
+
+```{r}
+# Variable summaries
+summary(codGames$Deaths)
+summary(codGames$Eliminations)
+
+# Correlation
+cor(codGames$Deaths, codGames$Eliminations, use = "complete.obs")
+```
+
+I chose two quantitative variables, eliminations and deaths exploring the relationship between the two variables. These two variables are commonly compared in video games in real life that many video games will display that ratio. The scatter plot shown above, shows a relatively positive relationship meaning the more eliminations someone has in the game, they will in turn likely have more deaths.
+
+This is supported by the correlation of .058, indicating a weak, yet still, positive relationship between the two variables. The fact it is a low positive correlation would indicate that although it's positive, there are likely several other factors that affect both of these variables.
 
 
 ## Task 4
