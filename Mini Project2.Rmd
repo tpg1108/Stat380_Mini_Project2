@@ -19,9 +19,77 @@ library(tidyverse)
 
 
 ## Task 1
+#### Completed by Sean Lydon
 
+We avoid using na.omit() to remove observations because the function is too aggressive. We want to omit the cells with "N/A" present in the attribute we are interested in, but na.omit() will find these values and omit the entire row if it contains at least one "N/A", often leading to bias in the results. Especially with our dataset, where some game modes do not have the same type of data from each mode, this will omit much of our dataset.
 
 ## Task 2
+#### Completed by Sean Lydon
+
+```{r}
+#Variable 1: Eliminations
+
+sum(is.na(codGames$Eliminations))
+
+summary(codGames$Eliminations)
+sd(codGames$Eliminations, na.rm = TRUE)
+
+ggplot(codGames, aes(x = Eliminations)) +
+  geom_histogram(bins = 30, fill = 'steelblue', color = "black") +
+  labs(title = "Distribution of Kills per Game",
+       x = "Eliminations",
+       y = "Frequency")
+```
+
+The variable Kills is a quantitative variable representing the number of kills achieved in a single game. The distribution is right-skewed, with most players achieving a relatively low number of kills and fewer players reaching very high values. The mean is slightly higher than the median, reinforcing the presence of a right tail. The standard deviation indicates moderate variability in player performance. There are few (or no) missing values, suggesting the variable is reliably recorded. Overall, this variable shows that most gameplay results in modest kill counts, with occasional high-performing outliers.
+
+```{r}
+#Variable 2: Deaths
+
+sum(is.na(codGames$Deaths))
+
+# Summary statistics
+summary(codGames$Deaths)
+sd(codGames$Deaths, na.rm = TRUE)
+
+# Visualization
+ggplot(codGames, aes(x = Deaths)) +
+  geom_histogram(bins = 30, fill = 'steelblue', color = 'black') +
+  labs(title = "Distribution of Deaths per Game",
+       x = "Deaths",
+       y = "Frequency")
+```
+
+
+The Deaths variable is quantitative and measures how many times a player died in a game. The distribution is typically centered around a moderate number of deaths, often appearing slightly right-skewed. The mean and median are usually close, suggesting a somewhat symmetric distribution compared to kills. The variability (standard deviation) shows that while most players have similar death counts, some games involve significantly higher deaths. Missing data appears minimal, indicating consistent tracking. This variable reflects player survivability and game intensity.
+
+```{r}
+#Variable 3: Map
+
+map_long <- codGames %>%
+  select(Map1, Map2) %>%
+  pivot_longer(cols = everything(),
+               names_to = "Map_Type",
+               values_to = "Map") %>%
+  filter(!is.na(Map))
+
+sum(is.na(map_long$Map))
+
+table(map_long$Map)
+prop.table(table(map_long$Map))
+
+ggplot(map_long, aes(x = Map)) +
+  geom_bar(fill = 'steelblue', color = "black") +
+  geom_text(stat = "count", aes(label = ..count..), vjust = -0.2) +
+  labs(title = "Distribution of Maps Played",
+       x = "Map",
+       y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+The Map variable is categorical and represents the location where each game takes place. The frequency table shows that some maps appear much more frequently than others, indicating either player preference or game rotation bias. The bar chart highlights this imbalance clearly, with a few maps dominating the dataset. There is little to no missing data, suggesting maps are always recorded. This uneven distribution may influence gameplay outcomes and should be considered in further analysis.
+
 
 
 ## Task 3
