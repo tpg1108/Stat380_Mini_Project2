@@ -119,7 +119,24 @@ I chose two quantitative variables, eliminations and deaths exploring the relati
 This is supported by the correlation of .058, indicating a weak, yet still, positive relationship between the two variables. The fact it is a low positive correlation would indicate that although it's positive, there are likely several other factors that affect both of these variables.
 
 
-## Task 4
+## Task 4 (Completed by Tim Damasco)
+```{r}
+#parses the Result column and splits on the hyphen to get team scores
+codGames <- codGames %>%
+  mutate(
+    TeamScore = as.numeric(sub("-.*", "", Result)),
+    OppScore  = as.numeric(sub(".*-", "", Result)),
+    Outcome   = case_when(
+      TeamScore > OppScore ~ "Win",
+      TeamScore < OppScore ~ "Loss",
+      TeamScore == OppScore ~ "Draw"
+    )
+  )
+
+#calculates the proportions generically (no hardcoded row count)
+outcome_props <- prop.table(table(codGames$Outcome))
+outcome_props
+```
 
 
 ## Task 5
