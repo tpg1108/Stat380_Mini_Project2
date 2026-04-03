@@ -11,10 +11,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(readxl)
-codGames <- read_xlsx('CODGames2_mp.xlsx')
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
+library(stringr)
+codGames <- read_xlsx('CODGames2_mp.xlsx')
 ```
 
 
@@ -139,4 +140,20 @@ outcome_props
 ```
 
 
-## Task 5
+## Task 5 (Completed by Ethan Martin)
+### Question: "How does a player's performance (using their kill/death ratio) affect the odds of the team winning the match?"
+```{r}
+clean_data <- codGames %>%
+  filter(!is.na(Result)) %>%
+  mutate(Result = str_replace(Result, " to ", "-")) %>%
+  separate(Result, into = c("TeamScore", "EnemyScore"), sep = "-", convert = TRUE) %>%
+  mutate(Win = ifelse(TeamScore > EnemyScore, 1, 0))
+
+model <- glm(Win ~ Eliminations + Deaths, data = clean_data, family = "binomial")
+summary(model)
+
+odds_ratios <- exp(coef(model))
+cat("\n--- Odds Ratios ---\n")
+print(odds_ratios)
+```
+### Answer: The model strongly supports what most people would think initially: that an individual player's performance strongly impacts the outcome of the match being played. More specifically, the amount of eliminations improves the odds of victory and the amount of deaths decreases the odds of victory. The model calculated that each elimination/kill corresponded to about a 7.3% increase of the odds of winning the match, while each subsequent death corresponded to a 9.3% *decrease* of those odds from the victory potential.
